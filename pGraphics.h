@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <math.h>
+#include <string.h>
 
 int calculategrid(int size)
 {
@@ -35,3 +36,27 @@ void creategrid(int size, char *letters)
     printf("+\n");
     
 }
+
+void replaceCharacters(char *eile, const char *input) {
+    int inputLen = strlen(input);
+    for (int i = 0; i < inputLen; i++) {
+        char *pos = strchr(eile, input[i]);
+        if (pos != NULL) {
+            *pos = ' '; // Replace with dot
+        }
+    }
+}
+
+int isWordEntered(char enteredWords[][10], int count, const char *word)
+{
+    for (int i = 0; i < count; i++)
+    {
+        if (strcmp(enteredWords[i], word) == 0)
+        {
+            return 1; // Word has already been entered
+        }
+    }
+    return 0; // Word has not been entered
+} 
+
+    
