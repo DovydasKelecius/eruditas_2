@@ -1,5 +1,32 @@
-#include "pFunctions.c"
-#include "pGraphics.h"
+#include "Shuffle.c"
+#include "Graphics.c"
+#include "Find.c"
+#include <ctype.h>
+#include <stdbool.h>
+
+// Checks if a word can be constructed from the given letters
+bool canMakeWordFromLetters(const char *word, const char *letters)
+{
+    int letterCounts[256] = {0}; // Frequency count for letters in `letters`
+
+    // Count the occurrences of each character in `letters`
+    for (int i = 0; letters[i] != '\0'; i++)
+    {
+        letterCounts[(unsigned char)letters[i]]++;
+    }
+
+    // Check if the word can be constructed
+    for (int i = 0; word[i] != '\0'; i++)
+    {
+        if (--letterCounts[(unsigned char)word[i]] < 0)
+        {
+            return false; // Not enough letters to form the word
+        }
+    }
+
+    return true;
+}
+
 
 int main()
 {
@@ -29,8 +56,7 @@ int main()
 
     ///laikina
     printf("Pasirinkti zodziai:\n");
-    int i;
-    for (i = 0; i < kiek1; i++)
+    for (int i = 0; i < kiek1; i++)
     {
         printf("%s %d\n", naud[i].zodis, naud[i].ilg);
     }
@@ -46,75 +72,100 @@ int main()
 
     sumaiso(eile);
     ///laikina
-    printf("************\n");
-    printf("Sumaisyta eile: %s\n", eile);
-    printf("************\n");
+    printf("---------\n%s\n-------\n", eile);
 
     // ########## GRAPHICS ############ //
-    
+
 
     // Graphics only work with x^2 arrays, example: 3x3, 5x5, not 3x4
     int size = strlen(eile);
     int sizeGrid = calculategrid(size);
 
-    int gameover = 0, foundWords = 0,  enteredCount = 0; 
+    int gameover = 0, foundWords = 0,  enteredCount = 0;
     // Gameover is  gameState, foundWords is the number of found words, entered count is the number of words entered
     char input[10];
-    char enteredWords[10][20]; 
+    char enteredWords[10][20];
     // input is user input string, enteredWords is list to make sure user doesn't repeat the same words and win
-    
+
     // system("cls");
-    while(!gameover)
+    while (!gameover)
     {
         printf("// ########## GRAPHICS ############ //\n\n");
         printf("Score []\n");
         creategrid(sizeGrid, eile);
         printf("\n[%d/%d] Enter found word: ", foundWords, kiek1);
-        
+
         // Input
         scanf("%s", input);
+
+        for (int i = 0; input[i] != '\0'; i++) // Convert all letters to lowercase
+            input[i] = tolower(input[i]);
+
         if (isWordEntered(enteredWords, enteredCount, input))
         {
             printf("Word already entered. Try a different word.\n");
             continue;
         }
-        // Scan the array
+
+        bool wordFound = false;
+
+        // Check if the word exists in `naud.zodis`
         for (int i = 0; i < kiek1; i++)
         {
             if (strcmp(naud[i].zodis, input) == 0)
             {
-                strcpy(enteredWords[enteredCount++], input); // Add the word to enteredWords
-                replaceCharacters(eile, input);
+                strcpy(enteredWords[enteredCount++], input); // Add the word to `enteredWords`
+                replaceCharacters(eile, input);             // Replace the used characters in `eile`
                 foundWords++;
+                wordFound = true;
+                break;
             }
         }
 
+        // If the word was not in `naud.zodis`, check if it can be made from `eile`
+        if(strlen(input)>=4 && strlen(input)<=6)
+        {
+            if (!wordFound && canMakeWordFromLetters(input, eile))
+            {
+                printf("Custom word accepted: %s\n", input);
+                strcpy(enteredWords[enteredCount++], input); // Add the word to `enteredWords`
+            }
+            else if (!wordFound)
+            {
+                printf("Invalid word. Try again.\n");
+            }
+        }
+        else
+            printf("Entered word doesnt follow the rules.\n");
 
 
-        if(foundWords == kiek1) gameover++;
-        system("cls");
+        ///laikina
+        printf("\nEntered Words:\n");
+        for (int i = 0; i < enteredCount; i++)
+        {
+            printf("%s\n", enteredWords[i]);
+        }
+
+
+        if (foundWords == kiek1) gameover++;
+        //system("cls");  laikinai uzkomentuota kad mestu konsolej "entered words"
     }
-    
+
 
 
     // ########## GRAPHICS END ############ //
 
     // Unallocating memory
 
-    //int i;
-    for (i=0; i<kiek; i++)
-        free(mas[i].zodis);
+    for (int i = 0; i < kiek; i++) free(mas[i].zodis);
     free(mas);
-    for (i=0; i<kiek1; i++)
+    for (int i = 0; i < kiek1; i++)
     {
         free(naud[i].zodis);
-        free(naud[i].ilg);
     }
+
     free(naud);
     free(eile);
     fclose(file);
     return 1;
 }
-
-
-

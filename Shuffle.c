@@ -1,20 +1,7 @@
-#include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
+#include <stdlib.h>
 #include <time.h>
-#include "pStruct.h"
-
-extern void kiek_zodziu(FILE *file, int *kiek);
-extern void zodziu_nuskaitymas(FILE *file, int *kiek, zodis *mas);
-extern void random_zodziai(int *kiek, zodis *mas, int *kiek1, zodis **naud);
-extern void apjungti(int *kiek1, zodis *naud, char *eile);
-extern void sumaiso(char *eile);
-
-extern int calculategrid(int size);
-extern void creategrid(int size, char *letters);
-extern void replaceCharacters(char *eile, const char *input);
-extern int isWordEntered(char enteredWords[][10], int count, const char *word);
-
+#include "Shuffle.h"
 
 void kiek_zodziu(FILE *file, int *kiek)///suranda kiek faile yra zodziu
 {
@@ -64,14 +51,14 @@ void random_zodziai(int *kiek, zodis *mas, int *kiek1, zodis **naud)
         exit(1);
     }
 
-    int i, sk;
+    int sk;
     ///atsitiktinai pasirenkami zodziai, kuriu bendras simboliu sk yra 16 (4x4 lentele)
     while(max_ilg!=16)
     {
         sk=0;
         max_ilg=0;
         (*kiek1)=0;
-        for (i=0; i<(*kiek); i++) ///nepanaudoti zodziai - 0; panaudoti - 1
+        for (int i=0; i<(*kiek); i++) ///nepanaudoti zodziai - 0; panaudoti - 1
             temp[i]=0;
 
         while (sk<(*kiek))
@@ -101,7 +88,7 @@ void random_zodziai(int *kiek, zodis *mas, int *kiek1, zodis **naud)
     *naud=temp_naud;
 
     sk=0;
-    for (i=0; i<(*kiek); i++)///naudojami zodziai perkeliami i naud masyva "naud"
+    for (int i=0; i<(*kiek); i++)///naudojami zodziai perkeliami i naud masyva "naud"
     {
         if(temp[i]==1)
         {
@@ -122,9 +109,8 @@ void random_zodziai(int *kiek, zodis *mas, int *kiek1, zodis **naud)
 }
 void apjungti(int *kiek1, zodis *naud, char *eile) ///apjungia zodzius i viena eilute
 {
-    int i;
     strcpy(eile, ""); ///tuscia eile
-    for (i = 0; i < *kiek1; i++)
+    for (int i = 0; i < *kiek1; i++)
     {
         strcat(eile, naud[i].zodis);
     }
@@ -132,8 +118,7 @@ void apjungti(int *kiek1, zodis *naud, char *eile) ///apjungia zodzius i viena e
 void sumaiso(char *eile) ///Fisher-Yates shuffle algorithm
 {
     int n=strlen(eile);
-    int i;
-    for(i=0; i<n; i++)
+    for(int i=0; i<n; i++)
     {
         int j=rand()%(i + 1);
         char temp=eile[i];
