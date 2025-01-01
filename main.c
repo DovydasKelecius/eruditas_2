@@ -92,6 +92,13 @@ int main()
     {
         printf("// ########## GRAPHICS ############ //\n\n");
         printf("Score []\n");
+        ///laikina
+        printf("\nEntered Words:\n");
+        for (int i = 0; i < enteredCount; i++)
+        {
+            printf("%s\n", enteredWords[i]);
+        }
+        
         creategrid(sizeGrid, eile);
         printf("\n[%d/%d] Enter found word: ", foundWords, kiek1);
 
@@ -139,16 +146,9 @@ int main()
             printf("Entered word doesnt follow the rules.\n");
 
 
-        ///laikina
-        printf("\nEntered Words:\n");
-        for (int i = 0; i < enteredCount; i++)
-        {
-            printf("%s\n", enteredWords[i]);
-        }
-
 
         if (foundWords == kiek1) gameover++;
-        //system("cls");  laikinai uzkomentuota kad mestu konsolej "entered words"
+        //system("cls");  //laikinai uzkomentuota kad mestu konsolej "entered words"
     }
 
 
