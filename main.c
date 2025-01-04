@@ -1,6 +1,5 @@
 #include "Shuffle.c"
 #include "Graphics.c"
-#include "Find.c"
 #include <ctype.h>
 #include <stdbool.h>
 
@@ -30,6 +29,11 @@ bool canMakeWordFromLetters(const char *word, const char *letters)
 
 int main()
 {
+    if(!mainMenu()) return 1;
+    int difficulty = selectDifficulty();
+
+    printf("Diff = %d\n\n\n", difficulty);
+
     int kiek=0, kiek1=0; /// kiek - zodziu kiekis faile; kiek1 - naudojamu zodziu kiekis
 
     FILE *file=fopen("zodziai.txt", "r"); ///pointeris i zodziu faila
@@ -75,29 +79,36 @@ int main()
     printf("---------\n%s\n-------\n", eile);
 
     // ########## GRAPHICS ############ //
-
+    // ########## GRAPHICS ############ //
+    // ########## GRAPHICS ############ //
 
     // Graphics only work with x^2 arrays, example: 3x3, 5x5, not 3x4
-    int size = strlen(eile);
-    int sizeGrid = calculategrid(size);
-
-    int gameover = 0, foundWords = 0,  enteredCount = 0;
+    int sizeGrid = calculategrid(strlen(eile));
+    int multiplierMain = 1;
+    float multiplierCustom = 0.0;
+    int gameover = 0, foundWords = 0,  enteredCount = 0, userScore = 0;
     // Gameover is  gameState, foundWords is the number of found words, entered count is the number of words entered
     char input[10];
-    char enteredWords[10][20];
+    char enteredWords[10][100];
     // input is user input string, enteredWords is list to make sure user doesn't repeat the same words and win
+
+
 
     // system("cls");
     while (!gameover)
     {
-        printf("// ########## GRAPHICS ############ //\n\n");
-        printf("Score []\n");
+        // printf("Difficulty = %d\n\n", difficulty);
+        float multiplier = multiplierMain + multiplierCustom;
         ///laikina
         printf("\nEntered Words:\n");
         for (int i = 0; i < enteredCount; i++)
         {
-            printf("%s\n", enteredWords[i]);
+            printf("%s ", enteredWords[i]);
         }
+
+        printf("\nScore [%d]\t Multiplier [x%0.2f]\n", userScore, multiplier);
+        
+        
         
         creategrid(sizeGrid, eile);
         printf("\n[%d/%d] Enter found word: ", foundWords, kiek1);
@@ -116,6 +127,7 @@ int main()
 
         bool wordFound = false;
 
+
         // Check if the word exists in `naud.zodis`
         for (int i = 0; i < kiek1; i++)
         {
@@ -125,6 +137,9 @@ int main()
                 replaceCharacters(eile, input);             // Replace the used characters in `eile`
                 foundWords++;
                 wordFound = true;
+
+                multiplierMain += 1;
+                userScore += 100 * multiplier;
                 break;
             }
         }
@@ -136,10 +151,14 @@ int main()
             {
                 printf("Custom word accepted: %s\n", input);
                 strcpy(enteredWords[enteredCount++], input); // Add the word to `enteredWords`
+
+                multiplierCustom += 0.05;
+                userScore += 10 * multiplier;
             }
             else if (!wordFound)
             {
                 printf("Invalid word. Try again.\n");
+                multiplierCustom = 0.0;
             }
         }
         else
@@ -148,10 +167,12 @@ int main()
 
 
         if (foundWords == kiek1) gameover++;
-        //system("cls");  //laikinai uzkomentuota kad mestu konsolej "entered words"
+        system("cls");
     }
 
-
+    if(gameover) displayVictory();
+    getchar(); 
+    getchar();
 
     // ########## GRAPHICS END ############ //
 

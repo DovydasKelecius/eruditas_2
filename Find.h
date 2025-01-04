@@ -1,6 +1,0 @@
-#ifndef FIND_H_INCLUDED
-#define FIND_H_INCLUDED
-
-
-
-#endif // FIND_H_INCLUDED

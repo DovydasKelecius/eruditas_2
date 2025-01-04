@@ -53,7 +53,7 @@ void replaceCharacters(char *eile, const char *input)
     }
 }
 
-int isWordEntered(char enteredWords[10][20], int count, const char *word)
+int isWordEntered(char enteredWords[10][100], int count, const char *word)
 {
     for (int i = 0; i < count; i++)
     {
@@ -63,4 +63,108 @@ int isWordEntered(char enteredWords[10][20], int count, const char *word)
         }
     }
     return 0; // Word has not been entered
+}
+
+// ################# Menu ###################
+
+void displayMenu() 
+{
+    system("cls");
+    printf("=== Main Menu ===\n");
+    printf("1. Start Game\n");
+    printf("2. Leaderboard\n");
+    printf("3. Game Manual\n");
+    printf("\n0. Quit\n");
+    printf("=================\n");
+}
+
+void displayManual()
+{
+    system("cls");
+    printf("=== Game Manual ===\n");
+    printf("TESTINGGGGGG YES"); // Game Manual here
+}
+
+void displayLeaderboard()
+{
+    system("cls");
+    printf("=== Leaderboard ===\n");
+    printf("TESTINGGGGGG"); 
+
+    // Reading and outputting from text 
+}
+
+void displayVictory()
+{
+    system("cls");
+    printf("\nCongratulations! You've WON!");
+}
+
+int selectDifficulty()
+{
+    int difficulty;
+    printf("Select Difficulty:\n");
+    printf("1. Easy\n");
+    printf("2. Medium\n");
+    printf("3. Hard\n");
+    printf("\n\nEnter your choice: ");
+    scanf("%d", &difficulty);
+
+    switch (difficulty) {
+        case 1:
+            printf("Easy difficulty selected.\n");
+            return difficulty = 1;
+        case 2:
+            printf("Medium difficulty selected.\n");
+            return difficulty = 2;
+        case 3:
+            printf("Hard difficulty selected.\n");
+            return difficulty = 3;
+        default:
+            printf("Invalid choice. Defaulting to Easy.\n");
+            return difficulty = 1;
+    }
+
+    return 1;
+}
+
+
+int mainMenu() 
+{
+    int choice;
+    do {
+        displayMenu();
+        printf("\n\nEnter your choice: ");
+        scanf("%d", &choice);
+
+        system("cls");
+        switch (choice) {
+            case 1:
+                printf("Starting the game...\n");
+                
+                return 1;
+            case 2:
+                printf("Displaying leaderboard...\n");
+                displayLeaderboard();
+
+                printf("\n\nPress Any Key to Return\n");  
+                getchar(); 
+                getchar();
+                break;
+            case 3:
+                printf("Opening game manual...\n");
+                displayManual();
+                printf("\n\nPress Any Key to Return\n");  
+                getchar();
+                getchar();
+                break;
+            case 0:
+                printf("Quitting the game. Goodbye!\n");
+                break;
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    } while (choice != 0);
+
+    return 0;
 }
