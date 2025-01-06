@@ -1,9 +1,4 @@
-#include <stdio.h>
-#include <math.h>
-#include <string.h>
 #include "Graphics.h"
-
-
 
 int calculategrid(int size)
 {
@@ -67,7 +62,7 @@ int isWordEntered(char enteredWords[10][100], int count, const char *word)
 
 // ################# Menu ###################
 
-void displayMenu() 
+void displayMenu()
 {
     system("cls");
     printf("=== Main Menu ===\n");
@@ -82,22 +77,48 @@ void displayManual()
 {
     system("cls");
     printf("=== Game Manual ===\n");
-    printf("TESTINGGGGGG YES"); // Game Manual here
+    printf("---Welcome to Eruditas 2!---\n");
+    printf("Wondering how to play?\n");
+    printf("You will see a board in front of you.\n");
+    printf("The board has a bunch of scrambled letters on it.\n");
+    printf("You have to guess all the different words made out of those letters!\n");
+    printf("There is a pre-selected list of words you have to guess, \nall the extra words guessed will give you additional points.\n\n\n");
+    printf("---\"Multiplier\"---:\n");
+    printf("Each correctly found word increases the multiplier by 1,\n");
+    printf("extra words by 0.05.\n");
+    printf("And each incorrect guess resets the multiplier to 1.\n\n\n");
+    printf("Good luck!\n");
 }
 
 void displayLeaderboard()
 {
     system("cls");
     printf("=== Leaderboard ===\n");
-    printf("TESTINGGGGGG"); 
+    printf("TESTINGGGGGG");
 
-    // Reading and outputting from text 
+    // Reading and outputting from text
 }
 
 void displayVictory()
 {
     system("cls");
-    printf("\nCongratulations! You've WON!");
+    printf("\nCongratulations! You've WON!\n");
+}
+
+int replay()
+{
+    int pasirinkimas;
+    printf("1. Return to menu\n");
+    printf("0. Quit.\n");
+    scanf("%d", &pasirinkimas);
+    if (pasirinkimas == 0)
+    {
+        printf("Thanks for playing! Goodbye!\n");
+        return 0;
+    }
+    else
+        return 1;
+
 }
 
 int selectDifficulty()
@@ -110,61 +131,65 @@ int selectDifficulty()
     printf("\n\nEnter your choice: ");
     scanf("%d", &difficulty);
 
-    switch (difficulty) {
-        case 1:
-            printf("Easy difficulty selected.\n");
-            return difficulty = 1;
-        case 2:
-            printf("Medium difficulty selected.\n");
-            return difficulty = 2;
-        case 3:
-            printf("Hard difficulty selected.\n");
-            return difficulty = 3;
-        default:
-            printf("Invalid choice. Defaulting to Easy.\n");
-            return difficulty = 1;
+    switch (difficulty)
+    {
+    case 1:
+        printf("Easy difficulty selected.\n");
+        return difficulty = 4;
+    case 2:
+        printf("Medium difficulty selected.\n");
+        return difficulty = 5;
+    case 3:
+        printf("Hard difficulty selected.\n");
+        return difficulty = 6;
+    default:
+        printf("Invalid choice. Defaulting to Easy.\n");
+        return difficulty = 4;
     }
 
     return 1;
 }
 
 
-int mainMenu() 
+int mainMenu()
 {
     int choice;
-    do {
+    do
+    {
         displayMenu();
         printf("\n\nEnter your choice: ");
         scanf("%d", &choice);
 
         system("cls");
-        switch (choice) {
-            case 1:
-                printf("Starting the game...\n");
-                
-                return 1;
-            case 2:
-                printf("Displaying leaderboard...\n");
-                displayLeaderboard();
+        switch (choice)
+        {
+        case 1:
+            printf("Starting the game...\n");
 
-                printf("\n\nPress Any Key to Return\n");  
-                getchar(); 
-                getchar();
-                break;
-            case 3:
-                printf("Opening game manual...\n");
-                displayManual();
-                printf("\n\nPress Any Key to Return\n");  
-                getchar();
-                getchar();
-                break;
-            case 0:
-                printf("Quitting the game. Goodbye!\n");
-                break;
-            default:
-                printf("Invalid choice. Please try again.\n");
+            return 1;
+        case 2:
+            printf("Displaying leaderboard...\n");
+            displayLeaderboard();
+
+            printf("\n\nPress Any Key to Return\n");
+            getchar();
+            getchar();
+            break;
+        case 3:
+            printf("Opening game manual...\n");
+            displayManual();
+            printf("\n\nPress Any Key to Return\n");
+            getchar();
+            getchar();
+            break;
+        case 0:
+            printf("Quitting the game. Goodbye!\n");
+            break;
+        default:
+            printf("Invalid choice. Please try again.\n");
         }
-    } while (choice != 0);
+    }
+    while (choice != 0);
 
     return 0;
 }
