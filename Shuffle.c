@@ -1,6 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
 #include "Shuffle.h"
 
 void kiek_zodziu(FILE *file, int *kiek)///suranda kiek faile yra zodziu
@@ -40,7 +37,8 @@ void zodziu_nuskaitymas(FILE *file, int *kiek, zodis *mas)
         sk++;
     }
 }
-void random_zodziai(int *kiek, zodis *mas, int *kiek1, zodis **naud)
+
+void random_zodziai(int *kiek, zodis *mas, int *kiek1, zodis **naud, int difficulty)
 {
     srand(time(0));
     int max_ilg=0;
@@ -53,7 +51,7 @@ void random_zodziai(int *kiek, zodis *mas, int *kiek1, zodis **naud)
 
     int sk;
     ///atsitiktinai pasirenkami zodziai, kuriu bendras simboliu sk yra 16 (4x4 lentele)
-    while(max_ilg!=16)
+    while(max_ilg!=difficulty * difficulty)
     {
         sk=0;
         max_ilg=0;
@@ -71,7 +69,7 @@ void random_zodziai(int *kiek, zodis *mas, int *kiek1, zodis **naud)
                 (*kiek1)++;
             }
 
-            if(max_ilg>=16)
+            if(max_ilg>=difficulty * difficulty)
                 break;
 
             sk++;
