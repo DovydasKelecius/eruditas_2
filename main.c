@@ -7,6 +7,17 @@ int main()
 {
     int zaidimas = 1;
     int max_score = 0;
+    FILE *file = fopen("highscore.txt", "r");
+    if (file != NULL)
+    {
+        fscanf(file, "%d", &max_score); // Read the score into max_score
+        fclose(file);
+    }
+    else
+    {
+        // If the file doesn't exist, default to 0
+        max_score = 0;
+    }
 
     while (zaidimas)
     {
