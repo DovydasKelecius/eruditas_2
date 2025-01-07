@@ -72,6 +72,7 @@ void displayManual()
     printf("The size of the board depends on the difficulity.\n");
     printf("The board has a bunch of scrambled letters on it.\n");
     printf("You have to guess all the different words made out of those letters!\n");
+    printf("The words should be 4 to 6 letters long.\n");
     printf("There is a pre-selected list of words you have to guess, \nall the extra words guessed will give you additional points.\n\n\n");
     printf("---\"Multiplier\"---:\n");
     printf("Each correctly found word increases the multiplier by 1,\n");
