@@ -14,10 +14,7 @@ int main()
         fclose(file);
     }
     else
-    {
-        // If the file doesn't exist, default to 0
-        max_score = 0;
-    }
+        max_score = 0;// If the file doesn't exist, default to 0
 
     while (zaidimas)
     {
@@ -52,13 +49,11 @@ int main()
 
         random_zodziai(&kiek, mas, &kiek1, &naud, difficulty);
 
+        /*
         printf("Pasirinkti zodziai:\n");
         for (int i = 0; i < kiek1; i++)
-        {
             printf("%s %d\n", naud[i].zodis, naud[i].ilg);
-        }
-
-
+        */
 
         char *eile = (char *)malloc((difficulty * difficulty + 1) * sizeof(char));
         if (eile == NULL)
@@ -82,7 +77,7 @@ int main()
         char input[10]; // user input
         char enteredWords[10][100]; // enteredWords is list to make sure user doesn't repeat the same words and win
 
-        //system("cls");
+        system("cls");
         while (!gameover)
         {
 
@@ -90,9 +85,7 @@ int main()
 
             printf("\nEntered Words:\n");
             for (int i = 0; i < enteredCount; i++)
-            {
                 printf("%s ", enteredWords[i]);
-            }
 
             printf("\nScore [%d]\t Multiplier [x%0.2f]\n", userScore, multiplier);
 

@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+#include <math.h>
 
 typedef struct zodis
 {
@@ -14,7 +15,7 @@ typedef struct zodis
 
 extern void kiek_zodziu(FILE *file, int *kiek);
 extern void zodziu_nuskaitymas(FILE *file, int *kiek, zodis *mas);
-extern void random_zodziai(int *kiek, zodis *mas, int *kiek1, zodis **naud);
+extern void random_zodziai(int *kiek, zodis *mas, int *kiek1, zodis **naud, int difficulty);
 extern void apjungti(int *kiek1, zodis *naud, char *eile);
 extern void sumaiso(char *eile);
 

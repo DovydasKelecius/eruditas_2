@@ -1,50 +1,48 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
 #include "Shuffle.h"
 
-void kiek_zodziu(FILE *file, int *kiek)///suranda kiek faile yra zodziu
+void kiek_zodziu(FILE *file, int *kiek)//suranda kiek faile yra zodziu
 {
-    char t; ///temporary
+    char t; //temporary
 
-    ///iesko pabaigos simbolio, aka. skaiciuoja zodzius
+    //iesko pabaigos simbolio, aka. skaiciuoja zodzius
     while ((t=fgetc(file))!=EOF)
         if (t=='\n')
             (*kiek)++;
 
-    ///jei paskutinis zodis nesibaigia "\n" ji vistiek prideda
-    fseek(file, -1, SEEK_END); ///rodykle perkelia 1 pozicija pries failo pabaiga; SEEK_END - perkelia rodykle i failo pabaiga
+    //jei paskutinis zodis nesibaigia "\n" ji vistiek prideda
+    fseek(file, -1, SEEK_END); //rodykle perkelia 1 pozicija pries failo pabaiga; SEEK_END - perkelia rodykle i failo pabaiga
     if (fgetc(file)!='\n')
         (*kiek)++;
 
-    rewind(file); ///failo rodykle perkeliama i failo pradzia
+    rewind(file); //failo rodykle perkeliama i failo pradzia
 }
 void zodziu_nuskaitymas(FILE *file, int *kiek, zodis *mas)
 {
-    char temp[256]; ///laikinai laiko zodi
-    int sk=0;    ///laikinas zodziu skaicius
-    while(fgets(temp, sizeof(temp), file)!=NULL && sk<kiek) ///nuskaito zodi kas eilute
+    char temp[256]; //laikinai laiko zodi
+    int sk=0;    //laikinas zodziu skaicius
+    while(fgets(temp, sizeof(temp), file)!=NULL && sk<kiek) //nuskaito zodi kas eilute
     {
-        int ilg=strlen(temp); ///suskaiciuoja zodzio ilgi
-        if (temp[ilg-1]=='\n') ///panaikina pabaigos simboli
+        int ilg=strlen(temp); //suskaiciuoja zodzio ilgi
+        if (temp[ilg-1]=='\n') //panaikina pabaigos simboli
             temp[ilg-1]='\0';
 
-        mas[sk].zodis=(char*)malloc((ilg+1)*sizeof(char)); ///zodziui priskiria atminti
+        mas[sk].zodis=(char*)malloc((ilg+1)*sizeof(char)); //zodziui priskiria atminti
         if (mas[sk].zodis==NULL)
         {
             printf("Nepavyksta priskirti atminties zodziui.\n");
             exit(1);
         }
-        strcpy(mas[sk].zodis, temp); ///nukopijuoja zodi i stuktura
-        mas[sk].ilg=strlen(temp); ///issaugo zodzio ilgi
+        strcpy(mas[sk].zodis, temp); //nukopijuoja zodi i stuktura
+        mas[sk].ilg=strlen(temp); //issaugo zodzio ilgi
         sk++;
     }
 }
-void random_zodziai(int *kiek, zodis *mas, int *kiek1, zodis **naud)
+
+void random_zodziai(int *kiek, zodis *mas, int *kiek1, zodis **naud, int difficulty)
 {
     srand(time(0));
     int max_ilg=0;
-    int *temp=(int *)malloc((*kiek)*sizeof(int)); /// Array to track selected words
+    int *temp=(int *)malloc((*kiek)*sizeof(int)); //masyvas kuriama laikinai saugomi naudojami zodziai
     if (temp==NULL)
     {
         printf("Nepavyksta priskirti atminties pasirinktiems zodziams.\n");
@@ -52,13 +50,12 @@ void random_zodziai(int *kiek, zodis *mas, int *kiek1, zodis **naud)
     }
 
     int sk;
-    ///atsitiktinai pasirenkami zodziai, kuriu bendras simboliu sk yra 16 (4x4 lentele)
-    while(max_ilg!=16)
+    while(max_ilg!=difficulty * difficulty)
     {
         sk=0;
         max_ilg=0;
         (*kiek1)=0;
-        for (int i=0; i<(*kiek); i++) ///nepanaudoti zodziai - 0; panaudoti - 1
+        for (int i=0; i<(*kiek); i++) //nepanaudoti zodziai - 0; panaudoti - 1
             temp[i]=0;
 
         while (sk<(*kiek))
@@ -71,7 +68,7 @@ void random_zodziai(int *kiek, zodis *mas, int *kiek1, zodis **naud)
                 (*kiek1)++;
             }
 
-            if(max_ilg>=16)
+            if(max_ilg>=difficulty * difficulty)
                 break;
 
             sk++;
@@ -88,7 +85,7 @@ void random_zodziai(int *kiek, zodis *mas, int *kiek1, zodis **naud)
     *naud=temp_naud;
 
     sk=0;
-    for (int i=0; i<(*kiek); i++)///naudojami zodziai perkeliami i naud masyva "naud"
+    for (int i=0; i<(*kiek); i++)//naudojami zodziai perkeliami i naud masyva "naud"
     {
         if(temp[i]==1)
         {
@@ -107,15 +104,15 @@ void random_zodziai(int *kiek, zodis *mas, int *kiek1, zodis **naud)
 
     free(temp);
 }
-void apjungti(int *kiek1, zodis *naud, char *eile) ///apjungia zodzius i viena eilute
+void apjungti(int *kiek1, zodis *naud, char *eile) //apjungia zodzius i viena eilute
 {
-    strcpy(eile, ""); ///tuscia eile
+    strcpy(eile, ""); //tuscia eile
     for (int i = 0; i < *kiek1; i++)
     {
         strcat(eile, naud[i].zodis);
     }
 }
-void sumaiso(char *eile) ///Fisher-Yates shuffle algorithm
+void sumaiso(char *eile) //Fisher-Yates shuffle algorithm
 {
     int n=strlen(eile);
     for(int i=0; i<n; i++)

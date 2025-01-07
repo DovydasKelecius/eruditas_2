@@ -15,22 +15,16 @@ void creategrid(int size, char *letters)
     {
         printf(" ");
         for (int j = 0; j < size; j++)
-        {
             printf("+---");
-        }
         printf("+\n");
         for (int j = 0; j < size; j++)
-        {
             printf(" | %c", letters[temp++]);
-        }
         printf(" |\n");
     }
 
     printf(" ");
     for (int j = 0; j < size; j++)
-    {
         printf("+---");
-    }
     printf("+\n");
 
 }
@@ -42,21 +36,16 @@ void replaceCharacters(char *eile, const char *input)
     {
         char *pos = strchr(eile, input[i]);
         if (pos != NULL)
-        {
             *pos = ' '; // Replace with dot
-        }
     }
 }
 
 int isWordEntered(char enteredWords[10][100], int count, const char *word)
 {
     for (int i = 0; i < count; i++)
-    {
         if (strcmp(enteredWords[i], word) == 0)
-        {
             return 1; // Word has already been entered
-        }
-    }
+
     return 0; // Word has not been entered
 }
 
@@ -80,6 +69,7 @@ void displayManual()
     printf("---Welcome to Eruditas 2!---\n");
     printf("Wondering how to play?\n");
     printf("You will see a board in front of you.\n");
+    printf("The size of the board depends on the difficulity.\n");
     printf("The board has a bunch of scrambled letters on it.\n");
     printf("You have to guess all the different words made out of those letters!\n");
     printf("There is a pre-selected list of words you have to guess, \nall the extra words guessed will give you additional points.\n\n\n");
@@ -95,12 +85,13 @@ void displayLeaderboard(int *max_score)
     printf("=== Leaderboard ===\n");
 
     FILE *file = fopen("highscore.txt", "r");
-    if (file != NULL) {
+    if (file != NULL)
+    {
         fscanf(file, "%d", max_score);
         fclose(file);
-    } else {
-        *max_score = 0;
     }
+    else
+        *max_score = 0;
 
     printf("High score: %d\n", *max_score);
 }
