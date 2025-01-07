@@ -80,7 +80,7 @@ void displayManual()
     printf("And each incorrect guess resets the multiplier to 1.\n\n\n");
     printf("---\"Wrong answers\"---\n");
     printf("If you enter three words in a row that are not made out of the given letters you will lose the game,\n");
-    printf("so try your best to guess correctly words!\n");
+    printf("so try your best to guess correctly words!\n\n");
     printf("Good luck!\n");
 }
 void displayLeaderboard(int *max_score)
