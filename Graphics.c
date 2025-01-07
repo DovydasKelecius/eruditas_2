@@ -102,6 +102,12 @@ void displayVictory()
     printf("\nCongratulations! You've WON!\n");
 }
 
+void displayDefeat()
+{
+    system("cls");
+    printf("\nYou've Lost... Want to try again?!\n");
+}
+
 int replay()
 {
     int pasirinkimas;

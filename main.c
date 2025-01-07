@@ -49,11 +49,11 @@ int main()
 
         random_zodziai(&kiek, mas, &kiek1, &naud, difficulty);
 
-        /*
+        
         printf("Pasirinkti zodziai:\n");
         for (int i = 0; i < kiek1; i++)
             printf("%s %d\n", naud[i].zodis, naud[i].ilg);
-        */
+        
 
         char *eile = (char *)malloc((difficulty * difficulty + 1) * sizeof(char));
         if (eile == NULL)
@@ -72,12 +72,12 @@ int main()
         int sizeGrid = calculategrid(strlen(eile));
         int multiplierMain = 1;
         float multiplierCustom = 0.0;
-        int gameover = 0, foundWords = 0, enteredCount = 0, userScore = 0;
+        int gameover = 0, game_lost = 0, foundWords = 0, enteredCount = 0, userScore = 0;
         // Gameover is gameState, foundWords is the number of found words, enteredCount is the number of words entered
         char input[10]; // user input
         char enteredWords[10][100]; // enteredWords is list to make sure user doesn't repeat the same words and win
 
-        system("cls");
+        // system("cls");
         while (!gameover)
         {
 
@@ -88,9 +88,11 @@ int main()
                 printf("%s ", enteredWords[i]);
 
             printf("\nScore [%d]\t Multiplier [x%0.2f]\n", userScore, multiplier);
+            printf("\nWrong answers: [%d/3]\n", wrong_answers);
 
             creategrid(sizeGrid, eile);
             printf("\n[%d/%d] Enter found word: ", foundWords, kiek1);
+
 
             scanf("%s", input);
 
@@ -106,10 +108,18 @@ int main()
             }
 
             checkWord_score(input, naud, kiek1, mas, kiek, enteredWords, &enteredCount, eile,
-                            &foundWords, &multiplierMain, &multiplierCustom, &userScore);
+                            &foundWords, &multiplierMain, &multiplierCustom, &userScore, &wrong_answers);
+
+            if (wrong_answers == 3)
+            {
+                game_lost = 1;
+                gameover = 1;
+            }
 
             if (foundWords == kiek1)
                 gameover = 1;
+
+
 
             system("cls");
         }
@@ -117,7 +127,8 @@ int main()
         if (gameover)
         {
             highscore(&userScore, &max_score);
-            displayVictory();
+            if (game_lost) displayDefeat();
+            else displayVictory();
             zaidimas = replay();
         }
 

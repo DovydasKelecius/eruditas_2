@@ -15,7 +15,7 @@ bool canMakeWordFromLetters(const char *zodis, const char *eile)
 }
 
 void checkWord_score(char *input, zodis *naud, int kiek1, zodis *mas, int kiek, char enteredWords[][100], int *enteredCount, char *eile,
-                     int *foundWords, int *multiplierMain, float *multiplierCustom, int *userScore)
+                     int *foundWords, int *multiplierMain, float *multiplierCustom, int *userScore, int *wrong_answers)
 {
     bool wordFound = false;
 
@@ -28,8 +28,9 @@ void checkWord_score(char *input, zodis *naud, int kiek1, zodis *mas, int kiek, 
                 replaceCharacters(eile, input);
                 (*foundWords)++;
                 wordFound = true;
+                (*userScore) += 1000 * (*multiplierMain + *multiplierCustom);  // Use the updated multiplier
                 (*multiplierMain) += 1.0;  // Update multiplierMain
-                (*userScore) += 100 * (*multiplierMain);  // Use the updated multiplier
+                (*wrong_answers) = 0;
                 break;
             }
 
@@ -38,15 +39,17 @@ void checkWord_score(char *input, zodis *naud, int kiek1, zodis *mas, int kiek, 
                 if (strcmp(mas[i].zodis, input) == 0)
                 {
                     strcpy(enteredWords[(*enteredCount)++], input);
+                    (*userScore) += 100 * (*multiplierMain + *multiplierCustom);  // Use the updated multiplier
                     (*multiplierCustom) += 0.05;  // Update multiplierCustom
-                    (*userScore) += 10 * (*multiplierMain);  // Use the updated multiplier
                     wordFound = true;
+                    (*wrong_answers) = 0;
                     break;
                 }
     }
 
     if (!wordFound)
     {
+        (*wrong_answers) += 1;
         printf("Invalid word.\n");
         (*multiplierCustom) = 0.0;
         (*multiplierMain) = 1.0;

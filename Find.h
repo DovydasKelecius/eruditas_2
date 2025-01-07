@@ -9,7 +9,7 @@
 
 bool canMakeWordFromLetters(const char *zodis, const char *eile);
 extern void checkWord_score(char *input, zodis *naud, int kiek1, zodis *mas, int kiek, char enteredWords[][100], int *enteredCount, char *eile,
-                            int *foundWords, int *multiplierMain, float *multiplierCustom, int *userScore);
+                            int *foundWords, int *multiplierMain, float *multiplierCustom, int *userScore, int *wrong_answers);
 extern void highscore(int *currentScore, int *max_score);
 extern void saveHighScoreToFile(int *max_score);
 
