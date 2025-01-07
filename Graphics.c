@@ -66,10 +66,10 @@ void displayManual()
 {
     system("cls");
     printf("=== Game Manual ===\n");
-    printf("---Welcome to Eruditas 2!---\n");
+    printf("---Welcome to Eruditas 2!---\n\n");
     printf("Wondering how to play?\n");
     printf("You will see a board in front of you.\n");
-    printf("The size of the board depends on the difficulity.\n");
+    printf("The size of the board depends on the difficulty you choose.\n");
     printf("The board has a bunch of scrambled letters on it.\n");
     printf("You have to guess all the different words made out of those letters!\n");
     printf("The words should be 4 to 6 letters long.\n");
@@ -78,6 +78,9 @@ void displayManual()
     printf("Each correctly found word increases the multiplier by 1,\n");
     printf("extra words by 0.05.\n");
     printf("And each incorrect guess resets the multiplier to 1.\n\n\n");
+    printf("---\"Wrong answers\"---\n");
+    printf("If you enter three words in a row you will lose the game,\n");
+    printf("so try your best to guess only the correct words!\n");
     printf("Good luck!\n");
 }
 void displayLeaderboard(int *max_score)
